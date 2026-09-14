@@ -1,0 +1,38 @@
+#!name = 百度APP开屏广告去除
+#!desc = 去除百度APP（手机百度）开屏广告，拦截启动页广告请求。建议配合广告平台拦截器使用。
+#!author = 李白
+#!homepage = 
+#!icon = https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Baidu.png
+#!tag = 去广告
+#!system = iOS
+#!loon_version = 3.2.1
+
+[Rule]
+# 百度广告联盟相关域名
+DOMAIN, mobads.baidu.com, REJECT
+DOMAIN, mobads-logs.baidu.com, REJECT
+DOMAIN, afd.baidu.com, REJECT
+DOMAIN, afdconf.baidu.com, REJECT
+DOMAIN, cpro.baidu.com, REJECT
+DOMAIN, cpro.baidustatic.com, REJECT
+DOMAIN, als.baidu.com, REJECT
+DOMAIN, bgg.baidu.com, REJECT
+DOMAIN, nadvideo2.baidu.com, REJECT
+DOMAIN, wn.pos.baidu.com, REJECT
+DOMAIN-SUFFIX, union.baidu.com, REJECT
+DOMAIN-SUFFIX, union.baidu.cn, REJECT
+
+[Rewrite]
+# 百度APP开屏核心接口
+^https?:\/\/mime\.baidu\.com\/v\d\/IosStart\/getStartInfo reject-200
+^https?:\/\/mime\.baidu\.com\/v\d\/activity\/advertisement reject-dict
+^https?:\/\/mime\.baidu\.com\/v\d\/start_screen_ads\/list reject-dict
+^https?:\/\/bgg\.baidu\.com\/bgg\/produce reject-dict
+
+# 其他可能相关的启动广告
+^https?:\/\/baichuan\.baidu\.com\/rs\/adpmobile\/launch reject-200
+^https?:\/\/cover\.baidu\.com\/cover\/page\/dspSwitchAds\/ reject-200
+^https?:\/\/afd\.baidu\.com\/afd\/entry reject-200
+
+[MITM]
+hostname = mime.baidu.com, bgg.baidu.com, baichuan.baidu.com, cover.baidu.com, afd.baidu.com, mobads.baidu.com
