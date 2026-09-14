@@ -2,7 +2,7 @@
 #!desc = 去除百度APP（手机百度）开屏广告，拦截启动页广告请求。建议配合广告平台拦截器使用。
 #!author = TC-Sakura
 #!homepage = 
-#!icon = https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Baidu.png
+#!icon = https://raw.githubusercontent.com/TC-Sakura/IconResource/main/App_icon/120px/Baidu.png
 #!tag = 去广告
 #!system = iOS
 #!loon_version = 3.2.1
