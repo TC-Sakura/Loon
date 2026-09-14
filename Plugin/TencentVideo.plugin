@@ -25,7 +25,6 @@ DOMAIN,aegis.qq.com,REJECT
 DOMAIN,rdelivery.qq.com,REJECT
 DOMAIN,rmonitor.qq.com,REJECT
 DOMAIN,ugchsy.gtimg.com,REJECT
-DOMAIN,tab.video.qq.com,REJECT
 
 # 后缀/关键词拦截
 DOMAIN-SUFFIX,gdt.qq.com,REJECT
@@ -60,7 +59,6 @@ IP-CIDR,111.6.166.107/32,REJECT,no-resolve
 # 部分广告上报接口
 ^https?:\/\/livew\.l\.qq\.com\/livemsg - reject-dict
 ^https?:\/\/ad\.qq\.com\/ - reject-dict
-^https?:\/\/tab\.video\.qq\.com\/ - reject-dict
 
 [MITM]
-hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com, tab.video.qq.com
+hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com
