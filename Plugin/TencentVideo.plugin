@@ -1,13 +1,13 @@
-#!name=腾讯视频去开屏广告
-#!desc=过滤腾讯视频客户端开屏广告及相关广告请求。
+#!name=腾讯视频去广告
+#!desc=去除腾讯视频开屏广告及相关广告请求
 #!author=TC-Sakura
 #!icon=https://raw.githubusercontent.com/TC-Sakura/IconResource/main/App_icon/120px/Tencent_Video.png
 #!tag=去广告
 #!loon_version=3.2.4(787)
-#!homepage=
 #!date=2026-09-14
 
 [Rule]
+# 广告相关域名直接拒绝
 DOMAIN,adsmind.gdtimg.com,REJECT
 DOMAIN,info4.video.qq.com,REJECT
 DOMAIN,info6.video.qq.com,REJECT
@@ -18,24 +18,47 @@ DOMAIN,tpns.qq.com,REJECT
 DOMAIN,vv6.video.qq.com,REJECT
 DOMAIN,ad.tencentvideo.com,REJECT
 DOMAIN,adstats.tencentvideo.com,REJECT
+DOMAIN,activity.video.qq.com,REJECT
+DOMAIN,iacc.qq.com,REJECT
+DOMAIN,tux.qq.com,REJECT
+DOMAIN,aegis.qq.com,REJECT
+DOMAIN,rdelivery.qq.com,REJECT
+DOMAIN,rmonitor.qq.com,REJECT
+DOMAIN,ugchsy.gtimg.com,REJECT
+
+# 后缀/关键词拦截
 DOMAIN-SUFFIX,gdt.qq.com,REJECT
 DOMAIN-SUFFIX,l.qq.com,REJECT
 DOMAIN-SUFFIX,ugdtimg.com,REJECT
 DOMAIN-SUFFIX,gdtimg.com,REJECT
 DOMAIN-SUFFIX,video.mpush.qq.com,REJECT
+DOMAIN-SUFFIX,static-res.qq.com,REJECT
+DOMAIN-SUFFIX,api.poll.video.qq.com,REJECT
+DOMAIN-SUFFIX,tpns.tencent.com,REJECT
+DOMAIN-SUFFIX,omgmta.qq.com,REJECT
+DOMAIN-SUFFIX,omgmta1.qq.com,REJECT
+
 DOMAIN-KEYWORD,trace.qq.com,REJECT
 DOMAIN-KEYWORD,trace.video.qq.com,REJECT
 DOMAIN-KEYWORD,pgdt.gtimg,REJECT
+DOMAIN-KEYWORD,track.qq.com,REJECT
+
+# 部分 IP
 IP-CIDR,47.110.187.87/32,REJECT,no-resolve
+IP-CIDR,183.201.213.194/32,REJECT,no-resolve
+IP-CIDR,120.222.144.64/32,REJECT,no-resolve
+IP-CIDR,111.6.166.107/32,REJECT,no-resolve
 
 [URL Rewrite]
+# 开屏/广告素材相关直接 reject
 ^https?:\/\/vv\.video\.qq\.com\/(diff|get)vmind - reject-dict
 ^http:\/\/[\d\.:]*\/?(defaultts\.tc|vmind\.qqvideo\.tc|finderpdd\.video)\.qq\.com\/\w+ - reject
 ^http:\/\/apd-vlive\.apdcdn\.tc\.qq\.com\/vmind\.qqvideo\.tc\.qq\.com\/\w+ - reject
 ^http:\/\/apd-\w+\.v\.smtcdns\.com\/(defaultts|omts|vmind\.qqvideo)\.tc\.qq\.com\/\w+ - reject
 
-[Script]
-http-request ^https?:\/\/vv\.video\.qq\.com\/getvinfo script-path=https://kelee.one/Resource/JavaScript/CommonScript/replace-body.js, requires-body=true, timeout=10, tag=腾讯视频去广告, argument="&sppreviewtype=\d(.*)&spsrt=\d->&sppreviewtype=0$1&spsrt=0"
+# 部分广告上报接口
+^https?:\/\/livew\.l\.qq\.com\/livemsg - reject-dict
+^https?:\/\/ad\.qq\.com\/ - reject-dict
 
 [MITM]
-hostname = vv.video.qq.com
+hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com
