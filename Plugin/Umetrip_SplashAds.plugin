@@ -6,11 +6,14 @@
 #!loon_version = 3.2.1
 
 [Rule]
+# 广告素材 / 相关域名
 DOMAIN, oss.umetrip.com, REJECT
 DOMAIN-SUFFIX, oss.umetrip.com, REJECT
+DOMAIN, sns.umetrip.com, REJECT
+DOMAIN-SUFFIX, sns.umetrip.com, REJECT
 
 [Script]
 http-response ^https?:\/\/(home\.umetrip\.com|114\.115\.217\.129)\/gateway\/api\/umetrip\/native$ script-path=https://raw.githubusercontent.com/TC-Sakura/Loon/refs/heads/main/Scripts/umetrip_ads.js, requires-body=false, timeout=10, tag=航旅纵横开屏
 
 [MITM]
-hostname = home.umetrip.com, 114.115.217.129, oss.umetrip.com
+hostname = home.umetrip.com, 114.115.217.129, oss.umetrip.com, sns.umetrip.com
