@@ -1,38 +1,91 @@
-#!name = 百度APP开屏广告去除
-#!desc = 去除百度APP（手机百度）开屏广告，拦截启动页广告请求。建议配合广告平台拦截器使用。
-#!author = TC-Sakura
-#!homepage = 
-#!icon = https://raw.githubusercontent.com/TC-Sakura/IconResource/main/App_icon/120px/Baidu.png
-#!tag = 去广告
-#!system = iOS
-#!loon_version = 3.2.1
+#!name=腾讯视频去广告
+#!desc=去除腾讯视频开屏广告及相关广告请求。
+#!author=TC-Sakura
+#!icon=https://raw.githubusercontent.com/TC-Sakura/IconResource/main/App_icon/120px/Tencent_Video.png
+#!tag=去广告
+#!loon_version=3.2.4(787)
+#!date=2026-09-15
 
 [Rule]
-# 百度广告联盟相关域名
-DOMAIN, mobads.baidu.com, REJECT
-DOMAIN, mobads-logs.baidu.com, REJECT
-DOMAIN, afd.baidu.com, REJECT
-DOMAIN, afdconf.baidu.com, REJECT
-DOMAIN, cpro.baidu.com, REJECT
-DOMAIN, cpro.baidustatic.com, REJECT
-DOMAIN, als.baidu.com, REJECT
-DOMAIN, bgg.baidu.com, REJECT
-DOMAIN, nadvideo2.baidu.com, REJECT
-DOMAIN, wn.pos.baidu.com, REJECT
-DOMAIN-SUFFIX, union.baidu.com, REJECT
-DOMAIN-SUFFIX, union.baidu.cn, REJECT
+# 原有广告域名
+DOMAIN,adsmind.gdtimg.com,REJECT
+DOMAIN,info4.video.qq.com,REJECT
+DOMAIN,info6.video.qq.com,REJECT
+DOMAIN,ios.video.mpush.qq.com,REJECT
+DOMAIN,otheve.beacon.qq.com,REJECT
+DOMAIN,pgdt.gtimg.cn,REJECT
+DOMAIN,tpns.qq.com,REJECT
+DOMAIN,vv6.video.qq.com,REJECT
+DOMAIN,ad.tencentvideo.com,REJECT
+DOMAIN,adstats.tencentvideo.com,REJECT
+DOMAIN,activity.video.qq.com,REJECT
+DOMAIN,iacc.qq.com,REJECT
+DOMAIN,tux.qq.com,REJECT
+DOMAIN,aegis.qq.com,REJECT
+DOMAIN,rdelivery.qq.com,REJECT
+DOMAIN,rmonitor.qq.com,REJECT
+DOMAIN,ugchsy.gtimg.com,REJECT
 
-[Rewrite]
-# 百度APP开屏核心接口
-^https?:\/\/mime\.baidu\.com\/v\d\/IosStart\/getStartInfo reject-200
-^https?:\/\/mime\.baidu\.com\/v\d\/activity\/advertisement reject-dict
-^https?:\/\/mime\.baidu\.com\/v\d\/start_screen_ads\/list reject-dict
-^https?:\/\/bgg\.baidu\.com\/bgg\/produce reject-dict
+# 开屏/启动关键新增
+DOMAIN,i.video.qq.com,REJECT
+DOMAIN,iacc.rec.qq.com,REJECT
+DOMAIN,snowflake.qq.com,REJECT
+DOMAIN,config.ab.qq.com,REJECT
+DOMAIN,data.ab.qq.com,REJECT
+DOMAIN,res.ab.qq.com,REJECT
+DOMAIN,ilive.qq.com,REJECT
+DOMAIN,api.ilive.qq.com,REJECT
+DOMAIN,tips.video.qq.com,REJECT
+DOMAIN,cgi.connect.qq.com,REJECT
+DOMAIN,tgwsc.qq.com,REJECT
 
-# 其他可能相关的启动广告
-^https?:\/\/baichuan\.baidu\.com\/rs\/adpmobile\/launch reject-200
-^https?:\/\/cover\.baidu\.com\/cover\/page\/dspSwitchAds\/ reject-200
-^https?:\/\/afd\.baidu\.com\/afd\/entry reject-200
+# 后缀/关键词
+DOMAIN-SUFFIX,gdt.qq.com,REJECT
+DOMAIN-SUFFIX,l.qq.com,REJECT
+DOMAIN-SUFFIX,ugdtimg.com,REJECT
+DOMAIN-SUFFIX,gdtimg.com,REJECT
+DOMAIN-SUFFIX,video.mpush.qq.com,REJECT
+DOMAIN-SUFFIX,static-res.qq.com,REJECT
+DOMAIN-SUFFIX,api.poll.video.qq.com,REJECT
+DOMAIN-SUFFIX,tpns.tencent.com,REJECT
+DOMAIN-SUFFIX,omgmta.qq.com,REJECT
+DOMAIN-SUFFIX,omgmta1.qq.com,REJECT
+DOMAIN-SUFFIX,iacc.qq.com,REJECT
+DOMAIN-SUFFIX,ilive.qq.com,REJECT
+DOMAIN-SUFFIX,ab.qq.com,REJECT
+
+DOMAIN-KEYWORD,trace.qq.com,REJECT
+DOMAIN-KEYWORD,trace.video.qq.com,REJECT
+DOMAIN-KEYWORD,pgdt.gtimg,REJECT
+DOMAIN-KEYWORD,track.qq.com,REJECT
+
+# 部分 IP
+IP-CIDR,47.110.187.87/32,REJECT,no-resolve
+IP-CIDR,183.201.213.194/32,REJECT,no-resolve
+IP-CIDR,120.222.144.64/32,REJECT,no-resolve
+IP-CIDR,111.6.166.107/32,REJECT,no-resolve
+
+[URL Rewrite]
+# 开屏/广告素材相关
+^https?:\/\/vv\.video\.qq\.com\/(diff|get)vmind - reject-dict
+^http:\/\/[\d\.:]*\/?(defaultts\.tc|vmind\.qqvideo\.tc|finderpdd\.video)\.qq\.com\/\w+ - reject
+^http:\/\/apd-vlive\.apdcdn\.tc\.qq\.com\/vmind\.qqvideo\.tc\.qq\.com\/\w+ - reject
+^http:\/\/apd-\w+\.v\.smtcdns\.com\/(defaultts|omts|vmind\.qqvideo)\.tc\.qq\.com\/\w+ - reject
+
+# 广告上报
+^https?:\/\/livew\.l\.qq\.com\/livemsg - reject-dict
+^https?:\/\/ad\.qq\.com\/ - reject-dict
+
+# 针对最新抓包的精确拦截
+^https?:\/\/i\.video\.qq\.com\/ - reject
+^https?:\/\/snowflake\.qq\.com\/ - reject-dict
+^https?:\/\/config\.ab\.qq\.com\/ - reject-dict
+^https?:\/\/ilive\.qq\.com\/cgi-bin\/general\/platform_config\/pull_config - reject-dict
+^https?:\/\/tips\.video\.qq\.com\/device\/registerDevice - reject-dict
+^https?:\/\/api\.ilive\.qq\.com\/gateway_svr_http\/wns - reject
+^https?:\/\/cgi\.connect\.qq\.com\/v5\/open\/get_sdk_config - reject-dict
+^https?:\/\/v\.qq\.com\/cache\/wuji_public\/object - reject-dict
+^https?:\/\/tgwsc\.qq\.com\/ - reject
 
 [MITM]
-hostname = mime.baidu.com, bgg.baidu.com, baichuan.baidu.com, cover.baidu.com, afd.baidu.com, mobads.baidu.com
+hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com, i.video.qq.com, iacc.rec.qq.com, snowflake.qq.com, config.ab.qq.com, *.ab.qq.com, ilive.qq.com, api.ilive.qq.com, tips.video.qq.com, cgi.connect.qq.com, tgwsc.qq.com, v.qq.com
