@@ -1,86 +1,47 @@
-#!name=腾讯视频去广告
-#!desc=去除腾讯视频开屏及广告请求。
+#!name=腾讯视频开屏去广告
+#!desc=移除腾讯视频App开屏广告及相关广告请求。
 #!author=TC-Sakura
 #!icon=https://raw.githubusercontent.com/TC-Sakura/IconResource/main/App_icon/120px/Tencent_Video.png
 #!tag=去广告
-#!loon_version=3.2.4(787)
+#!category=去广告
+#!loon_version=3.2.4
 #!date=2026-09-15
 
 [Rule]
-# 经典广告域名
-DOMAIN,adsmind.gdtimg.com,REJECT
-DOMAIN,info4.video.qq.com,REJECT
-DOMAIN,info6.video.qq.com,REJECT
-DOMAIN,ios.video.mpush.qq.com,REJECT
-DOMAIN,otheve.beacon.qq.com,REJECT
-DOMAIN,pgdt.gtimg.cn,REJECT
-DOMAIN,tpns.qq.com,REJECT
-DOMAIN,vv6.video.qq.com,REJECT
-DOMAIN,ad.tencentvideo.com,REJECT
-DOMAIN,adstats.tencentvideo.com,REJECT
-DOMAIN,activity.video.qq.com,REJECT
-DOMAIN,iacc.qq.com,REJECT
-DOMAIN,tux.qq.com,REJECT
-DOMAIN,aegis.qq.com,REJECT
-DOMAIN,rdelivery.qq.com,REJECT
-DOMAIN,rmonitor.qq.com,REJECT
-DOMAIN,ugchsy.gtimg.com,REJECT
+# 开屏与广告相关域名
+DOMAIN,adsmind.gdtimg.com,REJECT,extended-matching,pre-matching
+DOMAIN,info4.video.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN,info6.video.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN,ios.video.mpush.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN,otheve.beacon.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN,pgdt.gtimg.cn,REJECT,extended-matching,pre-matching
+DOMAIN,tpns.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN,vv6.video.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN,ad.tencentvideo.com,REJECT,extended-matching,pre-matching
+DOMAIN,adstats.tencentvideo.com,REJECT,extended-matching,pre-matching
+DOMAIN,activity.video.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX,gdt.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX,l.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX,gdtimg.com,REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX,ugdtimg.com,REJECT,extended-matching,pre-matching
+DOMAIN-SUFFIX,static-res.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN-KEYWORD,trace.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN-KEYWORD,trace.video.qq.com,REJECT,extended-matching,pre-matching
+DOMAIN-KEYWORD,pgdt.gtimg,REJECT,extended-matching,pre-matching
+IP-CIDR,47.110.187.87/32,REJECT,no-resolve,pre-matching
 
-# 开屏/启动相关（保留有效且不影响登录的）
-DOMAIN,i.video.qq.com,REJECT
-DOMAIN,iacc.rec.qq.com,REJECT
-DOMAIN,snowflake.qq.com,REJECT
-DOMAIN,config.ab.qq.com,REJECT
-DOMAIN,data.ab.qq.com,REJECT
-DOMAIN,res.ab.qq.com,REJECT
-DOMAIN,ilive.qq.com,REJECT
-DOMAIN,api.ilive.qq.com,REJECT
-DOMAIN,tips.video.qq.com,REJECT
-DOMAIN,tgwsc.qq.com,REJECT
-DOMAIN,tmfmazu.m.qq.com,REJECT
+# 广告视频素材拦截
+URL-REGEX,"^http:\/\/[\d\.:]*\/?(defaultts\.tc|vmind\.qqvideo\.tc|finderpdd\.video)\.qq\.com\/\w+",REJECT,extended-matching
+URL-REGEX,"^http:\/\/apd-vlive\.apdcdn\.tc\.qq\.com\/vmind\.qqvideo\.tc\.qq\.com\/\w+",REJECT,extended-matching
+URL-REGEX,"^http:\/\/apd-\w+\.v\.smtcdns\.com\/(defaultts|omts|vmind\.qqvideo)\.tc\.qq\.com\/\w+",REJECT,extended-matching
 
-# 后缀（已去掉过于宽泛的 tencent.com）
-DOMAIN-SUFFIX,gdt.qq.com,REJECT
-DOMAIN-SUFFIX,l.qq.com,REJECT
-DOMAIN-SUFFIX,ugdtimg.com,REJECT
-DOMAIN-SUFFIX,gdtimg.com,REJECT
-DOMAIN-SUFFIX,video.mpush.qq.com,REJECT
-DOMAIN-SUFFIX,static-res.qq.com,REJECT
-DOMAIN-SUFFIX,api.poll.video.qq.com,REJECT
-DOMAIN-SUFFIX,tpns.tencent.com,REJECT
-DOMAIN-SUFFIX,omgmta.qq.com,REJECT
-DOMAIN-SUFFIX,omgmta1.qq.com,REJECT
-DOMAIN-SUFFIX,iacc.qq.com,REJECT
-DOMAIN-SUFFIX,ilive.qq.com,REJECT
-DOMAIN-SUFFIX,ab.qq.com,REJECT
+[Map Local]
+# 直接返回空开屏广告数据
+^https?:\/\/vv\.video\.qq\.com\/(diff|get)vmind data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 
-DOMAIN-KEYWORD,trace.qq.com,REJECT
-DOMAIN-KEYWORD,trace.video.qq.com,REJECT
-DOMAIN-KEYWORD,pgdt.gtimg,REJECT
-DOMAIN-KEYWORD,track.qq.com,REJECT
-
-# IP
-IP-CIDR,47.110.187.87/32,REJECT,no-resolve
-IP-CIDR,183.201.213.194/32,REJECT,no-resolve
-IP-CIDR,120.222.144.64/32,REJECT,no-resolve
-IP-CIDR,111.6.166.107/32,REJECT,no-resolve
-
-[URL Rewrite]
-^https?:\/\/vv\.video\.qq\.com\/(diff|get)vmind - reject-dict
-^http:\/\/[\d\.:]*\/?(defaultts\.tc|vmind\.qqvideo\.tc|finderpdd\.video)\.qq\.com\/\w+ - reject
-^http:\/\/apd-vlive\.apdcdn\.tc\.qq\.com\/vmind\.qqvideo\.tc\.qq\.com\/\w+ - reject
-^http:\/\/apd-\w+\.v\.smtcdns\.com\/(defaultts|omts|vmind\.qqvideo)\.tc\.qq\.com\/\w+ - reject
-^https?:\/\/livew\.l\.qq\.com\/livemsg - reject-dict
-^https?:\/\/ad\.qq\.com\/ - reject-dict
-^https?:\/\/i\.video\.qq\.com\/ - reject
-^https?:\/\/snowflake\.qq\.com\/ - reject-dict
-^https?:\/\/config\.ab\.qq\.com\/ - reject-dict
-^https?:\/\/ilive\.qq\.com\/cgi-bin\/general\/platform_config\/pull_config - reject-dict
-^https?:\/\/tips\.video\.qq\.com\/device\/registerDevice - reject-dict
-^https?:\/\/api\.ilive\.qq\.com\/gateway_svr_http\/wns - reject
-^https?:\/\/v\.qq\.com\/cache\/wuji_public\/object - reject-dict
-^https?:\/\/tgwsc\.qq\.com\/ - reject
-^https?:\/\/tmfmazu\.m\.qq\.com\/ - reject
+[Script]
+# 修改预览参数，减少广告
+移除预览广告 = type=http-request, pattern=^https?:\/\/vv\.video\.qq\.com\/getvinfo, script-path=https://raw.githubusercontent.com/TC-Sakura/Loon/main/Scripts/replace-body.js, requires-body=true, argument="&sppreviewtype=\d(.*)&spsrt=\d->&sppreviewtype=0$1&spsrt=0"
 
 [MITM]
-hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com, i.video.qq.com, iacc.rec.qq.com, snowflake.qq.com, config.ab.qq.com, *.ab.qq.com, ilive.qq.com, api.ilive.qq.com, tips.video.qq.com, tgwsc.qq.com, v.qq.com, tmfmazu.m.qq.com
+hostname = %APPEND% vv.video.qq.com
