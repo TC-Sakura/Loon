@@ -4,10 +4,10 @@
 #!icon=https://raw.githubusercontent.com/TC-Sakura/IconResource/main/App_icon/120px/Tencent_Video.png
 #!tag=去广告
 #!loon_version=3.2.4(787)
-#!date=2026-09-14
+#!date=2026-09-15
 
 [Rule]
-# 广告相关域名直接拒绝
+# 原有广告域名
 DOMAIN,adsmind.gdtimg.com,REJECT
 DOMAIN,info4.video.qq.com,REJECT
 DOMAIN,info6.video.qq.com,REJECT
@@ -26,7 +26,15 @@ DOMAIN,rdelivery.qq.com,REJECT
 DOMAIN,rmonitor.qq.com,REJECT
 DOMAIN,ugchsy.gtimg.com,REJECT
 
-# 后缀/关键词拦截
+# 新增/强化（开屏关键）
+DOMAIN,i.video.qq.com,REJECT
+DOMAIN,iacc.rec.qq.com,REJECT
+DOMAIN,snowflake.qq.com,REJECT
+DOMAIN,config.ab.qq.com,REJECT
+DOMAIN,data.ab.qq.com,REJECT
+DOMAIN,res.ab.qq.com,REJECT
+
+# 后缀/关键词
 DOMAIN-SUFFIX,gdt.qq.com,REJECT
 DOMAIN-SUFFIX,l.qq.com,REJECT
 DOMAIN-SUFFIX,ugdtimg.com,REJECT
@@ -37,6 +45,7 @@ DOMAIN-SUFFIX,api.poll.video.qq.com,REJECT
 DOMAIN-SUFFIX,tpns.tencent.com,REJECT
 DOMAIN-SUFFIX,omgmta.qq.com,REJECT
 DOMAIN-SUFFIX,omgmta1.qq.com,REJECT
+DOMAIN-SUFFIX,iacc.qq.com,REJECT
 
 DOMAIN-KEYWORD,trace.qq.com,REJECT
 DOMAIN-KEYWORD,trace.video.qq.com,REJECT
@@ -60,5 +69,10 @@ IP-CIDR,111.6.166.107/32,REJECT,no-resolve
 ^https?:\/\/livew\.l\.qq\.com\/livemsg - reject-dict
 ^https?:\/\/ad\.qq\.com\/ - reject-dict
 
+# 新增：针对 i.video 和配置的粗暴拦截（如果正常功能受影响可注释）
+^https?:\/\/i\.video\.qq\.com\/ - reject
+^https?:\/\/snowflake\.qq\.com\/ - reject-dict
+^https?:\/\/config\.ab\.qq\.com\/ - reject-dict
+
 [MITM]
-hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com
+hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com, i.video.qq.com, iacc.rec.qq.com, snowflake.qq.com, config.ab.qq.com, *.ab.qq.com, v.qq.com
