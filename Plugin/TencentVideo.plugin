@@ -1,5 +1,5 @@
 #!name=腾讯视频去广告
-#!desc=去除腾讯视频开屏广告及相关广告请求
+#!desc=去除腾讯视频开屏广告及相关广告请求。
 #!author=TC-Sakura
 #!icon=https://raw.githubusercontent.com/TC-Sakura/IconResource/main/App_icon/120px/Tencent_Video.png
 #!tag=去广告
@@ -26,13 +26,18 @@ DOMAIN,rdelivery.qq.com,REJECT
 DOMAIN,rmonitor.qq.com,REJECT
 DOMAIN,ugchsy.gtimg.com,REJECT
 
-# 新增/强化（开屏关键）
+# 开屏/启动关键新增
 DOMAIN,i.video.qq.com,REJECT
 DOMAIN,iacc.rec.qq.com,REJECT
 DOMAIN,snowflake.qq.com,REJECT
 DOMAIN,config.ab.qq.com,REJECT
 DOMAIN,data.ab.qq.com,REJECT
 DOMAIN,res.ab.qq.com,REJECT
+DOMAIN,ilive.qq.com,REJECT
+DOMAIN,api.ilive.qq.com,REJECT
+DOMAIN,tips.video.qq.com,REJECT
+DOMAIN,cgi.connect.qq.com,REJECT
+DOMAIN,tgwsc.qq.com,REJECT
 
 # 后缀/关键词
 DOMAIN-SUFFIX,gdt.qq.com,REJECT
@@ -46,6 +51,8 @@ DOMAIN-SUFFIX,tpns.tencent.com,REJECT
 DOMAIN-SUFFIX,omgmta.qq.com,REJECT
 DOMAIN-SUFFIX,omgmta1.qq.com,REJECT
 DOMAIN-SUFFIX,iacc.qq.com,REJECT
+DOMAIN-SUFFIX,ilive.qq.com,REJECT
+DOMAIN-SUFFIX,ab.qq.com,REJECT
 
 DOMAIN-KEYWORD,trace.qq.com,REJECT
 DOMAIN-KEYWORD,trace.video.qq.com,REJECT
@@ -59,20 +66,26 @@ IP-CIDR,120.222.144.64/32,REJECT,no-resolve
 IP-CIDR,111.6.166.107/32,REJECT,no-resolve
 
 [URL Rewrite]
-# 开屏/广告素材相关直接 reject
+# 开屏/广告素材相关
 ^https?:\/\/vv\.video\.qq\.com\/(diff|get)vmind - reject-dict
 ^http:\/\/[\d\.:]*\/?(defaultts\.tc|vmind\.qqvideo\.tc|finderpdd\.video)\.qq\.com\/\w+ - reject
 ^http:\/\/apd-vlive\.apdcdn\.tc\.qq\.com\/vmind\.qqvideo\.tc\.qq\.com\/\w+ - reject
 ^http:\/\/apd-\w+\.v\.smtcdns\.com\/(defaultts|omts|vmind\.qqvideo)\.tc\.qq\.com\/\w+ - reject
 
-# 部分广告上报接口
+# 广告上报
 ^https?:\/\/livew\.l\.qq\.com\/livemsg - reject-dict
 ^https?:\/\/ad\.qq\.com\/ - reject-dict
 
-# 新增：针对 i.video 和配置的粗暴拦截（如果正常功能受影响可注释）
+# 针对最新抓包的精确拦截
 ^https?:\/\/i\.video\.qq\.com\/ - reject
 ^https?:\/\/snowflake\.qq\.com\/ - reject-dict
 ^https?:\/\/config\.ab\.qq\.com\/ - reject-dict
+^https?:\/\/ilive\.qq\.com\/cgi-bin\/general\/platform_config\/pull_config - reject-dict
+^https?:\/\/tips\.video\.qq\.com\/device\/registerDevice - reject-dict
+^https?:\/\/api\.ilive\.qq\.com\/gateway_svr_http\/wns - reject
+^https?:\/\/cgi\.connect\.qq\.com\/v5\/open\/get_sdk_config - reject-dict
+^https?:\/\/v\.qq\.com\/cache\/wuji_public\/object - reject-dict
+^https?:\/\/tgwsc\.qq\.com\/ - reject
 
 [MITM]
-hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com, i.video.qq.com, iacc.rec.qq.com, snowflake.qq.com, config.ab.qq.com, *.ab.qq.com, v.qq.com
+hostname = vv.video.qq.com, *.l.qq.com, ad.qq.com, i.video.qq.com, iacc.rec.qq.com, snowflake.qq.com, config.ab.qq.com, *.ab.qq.com, ilive.qq.com, api.ilive.qq.com, tips.video.qq.com, cgi.connect.qq.com, tgwsc.qq.com, v.qq.com
