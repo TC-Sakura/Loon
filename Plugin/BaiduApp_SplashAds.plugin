@@ -1,4 +1,4 @@
-#!name = 百度APP开屏广告去除
+#!name = 自用百度APP开屏广告
 #!desc = 去除百度APP（手机百度）开屏广告，拦截启动页广告请求。建议配合广告平台拦截器使用。
 #!author = TC-Sakura
 #!homepage = 
