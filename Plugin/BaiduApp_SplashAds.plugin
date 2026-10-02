@@ -18,6 +18,8 @@ DOMAIN, als.baidu.com, REJECT
 DOMAIN, bgg.baidu.com, REJECT
 DOMAIN, nadvideo2.baidu.com, REJECT
 DOMAIN, wn.pos.baidu.com, REJECT
+DOMAIN, ecmb.bdimg.com, REJECT
+DOMAIN, sofire.baidu.com, REJECT
 DOMAIN-SUFFIX, union.baidu.com, REJECT
 DOMAIN-SUFFIX, union.baidu.cn, REJECT
 
