@@ -8,10 +8,6 @@ DOMAIN-SUFFIX,killcovid2021.com,REJECT
 DOMAIN-KEYWORD,killcovid,REJECT
 
 [Rewrite]
-^https?:\/\/limbopro\.com\/Adguard\/Adblock4limbo\.function\.js - reject
-^https?:\/\/raw\.githubusercontent\.com\/limbopro\/Adblock4limbo\/.*\/Adblock4limbo\.function\.js - reject
-^https?:\/\/limbopro\.com\/Adguard\/Adblock4limbo\.user\.js - reject
-
 # 屏蔽广告资源
 ^https?:\/\/(img|vthumb)\.killcovid2021\.com.*?\.mp4 - reject
 ^https?:\/\/.*\.cdn77\.org\/.*\.mp4 - reject
